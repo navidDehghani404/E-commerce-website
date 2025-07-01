@@ -1,0 +1,75 @@
+body{
+    font-family: "Bahnschrift Condensed";
+    margin: 0;
+    padding: 0;
+    background: #0dcaf0;
+    overflow-x: hidden;
+    height: 300vh;
+}
+.FormDiv{
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 90%;
+    padding: 0.5%;
+    margin-left: 3%;
+    box-shadow: 1px 1px 1px black;
+    background: white;
+    height: 100.5%;
+    margin-top: 2%;
+}
+.images{
+    border-radius: 10px;
+    width: 99%;
+    height: 200px;
+}
+.btnn{
+    background: #0a58ca;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+    font-family: "Bahnschrift Condensed";
+    border-radius: 5px;
+    height: 30px;
+}
+.btn:hover{
+    background: #0d6efd;
+    cursor: pointer;
+}
+.FormDiv h3{
+    font-size: 110%;
+    font-weight: bold;
+}
+.FormDiv h1{
+    font-size: 200%;
+    font-weight: bold;
+}
+.DivError{
+    width: 100%;
+    margin-top: 80%;
+    margin-left: 235%;
+}
+.footerDiv{
+    position: sticky;
+    top: 80vh;
+    z-index: 1000;
+    background: #333;
+    color: #fff;
+    height: 20vh;
+    padding: 2%;
+    display: flex;
+}
+.font p{
+    font-size: 140%;
+    margin-top: 1%;
+    margin-left: 20%;
+}
+.btn2{
+    width: 350%;
+    height: 7vh;
+    font-size: 150%;
+}
+.mainDivCart{
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    width: 100%;
+}

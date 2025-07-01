@@ -1,0 +1,83 @@
+body{
+    font-family: "Bahnschrift Condensed";
+    margin: 0;
+    padding: 0;
+    background: #0dcaf0;
+    overflow-x: hidden;
+}
+.FormDiv{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 80%;
+    padding: 5%;
+    margin-left: 4%;
+    margin-top: 2%;
+    box-shadow: 1px 1px 1px black;
+    background: white;
+    height: 45vh;
+}
+.images{
+    border-radius: 10px;
+    width: 90%;
+    height: 27vh;
+    margin-left: 5%;
+}
+.btn{
+    background: #0a58ca;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+    font-family: "Bahnschrift Condensed";
+    border-radius: 5px;
+    height: 30px;
+}
+.btn:hover{
+    background: #0d6efd;
+    cursor: pointer;
+}
+.head {
+    background: #0a53be;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.headObj{
+    color: white;
+    padding: 1%;
+
+}
+.headObj:hover{
+    cursor: pointer;
+    background: #0a58ca;
+}
+.FormDiv h1,h3{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.SearchTxt{
+    height: 35px;
+    width: 20%;
+    border-radius: 6px;
+    font-family: "Bahnschrift Condensed";
+    font-size: 105%;
+}
+.SearchBtn{
+    background: #0a58ca;
+    color: white;
+    width: 7%;
+    margin-top: auto;
+    font-family: "Bahnschrift Condensed";
+    font-size: 105%;
+    border-radius: 5px;
+    height: 4.1vh;
+}
+.SearchMainForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.BigFormDiv{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    width: 100%;
+}

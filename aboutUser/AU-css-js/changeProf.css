@@ -1,0 +1,47 @@
+body{
+    font-family: "Bahnschrift Condensed";
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    background: #0dcaf0;
+    border-radius: 10px;
+    padding: 2%;
+}
+.FormContainer{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 10%;
+}
+.form label{
+    margin-top:12%;
+    margin-bottom: 2%;
+    height: 20px;
+}
+.btn_{
+    font-family: "Bahnschrift Condensed";
+    border-radius: 5px;
+    font-size: 110%;
+    margin-top: 12%;
+    background: rgba(47,47,47,1);
+    color: white;
+}
+.btn:hover{
+    cursor: pointer;
+}
+.error{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 1%;
+}
+.form select{
+    margin:9%;
+}
+.txtbox{
+    border-radius: 5px;
+    height: 4vh;
+    font-size: 110%;
+    font-family: "Bahnschrift Condensed";
+}
