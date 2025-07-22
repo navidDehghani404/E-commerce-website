@@ -48,7 +48,7 @@
 </body>
 </html>
 <?php
-require '../classes/Select.php';
+require '../utility_class/Select.php';
 use select\Select;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdo = new PDO("mysql:host=localhost;dbname=webstore", "root", "");

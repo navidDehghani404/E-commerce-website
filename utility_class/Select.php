@@ -1,20 +1,28 @@
 <?php
 namespace select;
-use PDO;
+require_once 'SQL.php';
+require_once 'connect.php';
 
-class Select {
-    function fetch($pdo,$table_name,$feature,$search)
+use Connect;
+use PDO;
+use SQL;
+
+class Select extends SQL {
+    public function __construct(){
+        parent::__construct();
+    }
+    function fetch($table_name,$feature,$search)
     {
-            $query = $pdo->prepare("SELECT * FROM $table_name WHERE $feature=:search");
+            $query = $this->pdo->prepare("SELECT * FROM $table_name WHERE $feature=:search");
             $query->bindParam(':search',$search);
             $query->execute();
             $result = $query->fetch(PDO::FETCH_ASSOC);
             return $result;
     }
-    function fetchAll($pdo,$table_name,$feature,$search)
+    function fetchAll($table_name,$feature,$search)
     {
         try {
-            $query = $pdo->prepare("SELECT * FROM $table_name WHERE $feature=:search");
+            $query = $this->pdo->prepare("SELECT * FROM $table_name WHERE $feature=:search");
             $query->bindParam(':search',$search);
             $query->execute();
             $result = $query->fetchAll(PDO::FETCH_ASSOC);

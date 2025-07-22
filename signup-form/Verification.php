@@ -21,15 +21,13 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["code"] == $_SESSION["code"]) {
         try {
-            $pdo = new PDO("mysql:host=localhost;dbname=webstore", "root", "");
-            $query = $pdo->prepare("INSERT INTO user(email, password) VALUES(:email, :password)");
-            $query->bindParam(":email", $_SESSION["email"]);
-            $hashedPassword = password_hash($_SESSION["password"], PASSWORD_BCRYPT);
-            $query->bindParam(":password", $hashedPassword);
-            $query->execute();
+            $connect= new  Connect();
+            $user= new \models\User($connect->connectToDatabase());
+            $user->signUp($_SESSION["email"],$_SESSION["password"]);
             unset($_SESSION["email"]);
             unset($_SESSION["password"]);
         }catch (PDOException $e) {
+            echo "<p class='error'>".$e->getMessage()."</p><br>";
         }
         header("Location:../Login-form/Login.php");
     }

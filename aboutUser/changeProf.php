@@ -20,52 +20,25 @@
 </html>
 <?php
 session_start();
-require '../classes/Select.php';
+require_once '../utility_class/Select.php';
+require_once '../utility_class/connect.php';
+require_once '../utility_class/SQL.php';
+require_once '../models/User.php';
 use select\Select;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pdo=new PDO("mysql:host=localhost;dbname=webstore","root","");
-    if (!isset($_SESSION["email"])) {
+    $connect=new Connect();
+    $pdo=$connect->connectToDatabase();
+    $sql=new SQL();
+    $user=new \models\User($pdo);
+    if (!$user->loggedIn()) {
         exit("<h3 class='error'>Please Login</h3>");
     }
     if (!empty($_POST['username'])) {
-        $query = $pdo->prepare("UPDATE user SET user_name=:username WHERE email=:email");
-        $query->bindParam(':username', $_POST['username']);
-        $query->bindParam(':email', $_SESSION['email']);
-        $query->execute();
+        $sql->edit('user','user_name',$_POST['username'],'email',$_SESSION['email']);
     }
     if (!empty($_POST['address'])) {
-        $query = $pdo->prepare("UPDATE user SET address=:address WHERE email=:email");
-        $query->bindParam(':address', $_POST['address']);
-        $query->bindParam(':email', $_SESSION['email']);
-        $query->execute();
+        $sql->edit('user','address',$_POST['address'],'email',$_SESSION['email']);
     }
-    if (!empty($_FILES['img']['name'])) {
-
-        $types = ['jpg', 'png', 'jpeg'];
-        if (!in_array(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION), $types)) {
-            exit("<h3 class='error'>Only jpg, png, jpeg files are allowed</h3>");
-        }
-        $path = '../profiles/' .uniqid('prof',true).'.'.pathinfo($_FILES['img']['name'],PATHINFO_EXTENSION);
-        if (move_uploaded_file($_FILES['img']['tmp_name'], $path)) {
-            $select = new Select();
-            $results = $select->fetch($pdo, 'user', 'email', $_SESSION['email']);
-            if ($results) {
-                if (!empty($results['profile_path'])) {
-
-                    $file = $results['profile_path'];
-                    if (file_exists($file)) {
-                        unlink($file);
-                    }
-                }
-            }
-            $query = $pdo->prepare("UPDATE user SET profile_path=:profile WHERE email=:email");
-            $query->bindParam(':profile', $path);
-            $query->bindParam(':email', $_SESSION['email']);
-            $query->execute();
-
-        } else {
-            exit("<h3 class='error'>There is an error</h3>");
-        }
-    }
-    header('location: profile.php');
+    $user->validateProfileImageAndAdd($pdo,$_FILES['img']['name'],'There is an error');
+    header('location: ../UserPanel/AllProductPanel.php');
 }

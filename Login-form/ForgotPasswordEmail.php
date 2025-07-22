@@ -17,10 +17,10 @@
 </body>
 </html>
 <?php
-require '../classes/Select.php';
-require '../classes/Mailer.php';
+require '../utility_class/Select.php';
+require '../utility_class/Mailer.php';
 use select\Select;
-use mailer\Mailer;
+use utility_class\Mailer;
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $select = new Select();

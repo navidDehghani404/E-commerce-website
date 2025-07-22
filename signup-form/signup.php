@@ -20,25 +20,23 @@
 </html>
 
 <?php
+
+use utility_class\Mailer;
+
+require_once "../utility_class/connect.php";
+require_once "../models/User.php";
+require '../utility_class/Mailer.php';
 session_start();
-use mailer\Mailer;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require '../classes/Mailer.php';
     if (strlen($_POST["password"]) < 8) {
         echo "<p class='error'>Password must be at least 8 characters long.</p><br>";
         exit();
     }
     try {
-        $pdo= new PDO("mysql:host=localhost;dbname=webstore", "root", "");
-        $query=$pdo->prepare('SELECT * FROM user WHERE email=:email');
-        $query->bindParam(':email',$_POST["email"],PDO::PARAM_STR);
-        $query->execute();
-        $result=$query->fetch();
-        if ($result){
-            echo "<p class='error'>Email already exists.</p><br>";
-            exit();
-        }
-    }catch (PDOException $e){
+        $connect= new  Connect();
+        $user= new \models\User($connect->connectToDatabase());
+        $user->signedUp($_POST["email"]);
+        } catch (PDOException $e){
         echo "<p class='error'>Not connect.</p><br>";
     }
     $_SESSION["email"] = $_POST["email"];

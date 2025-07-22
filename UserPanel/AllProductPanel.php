@@ -26,18 +26,22 @@
         <ul>
             <li><a href="../aboutUser/profile.php">Profile</a></li>
             <li><a href="../aboutUser/CartItems.php">My shopping cart</a></li>
+            <li><a href="../aboutUser/logout.php">Logout</a></li>
             <li><a href="#">About us</a></li>
         </ul>
     </nav>
 </div>
 <div class="BigFormDiv">
     <?php
+
+    use models\Product;
+
+    require_once '../utility_class/connect.php';
+    require_once '../models/Product.php';
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=webstore", "root", "");
-        $query = $pdo->prepare("SELECT * FROM product");
-        $query->execute();
-        $result = $query->fetchAll();
-        foreach ($result as $row) {
+        $connect=new connect();
+        $result=new Product($connect->connectToDatabase());
+        foreach ($result->showAll() as $row) {
                 echo "<div class='FormDiv'>";
                 echo "<form method='get' action='ProductPanel.php'>";
                 $path = $row['image_path'];

@@ -9,14 +9,14 @@
 <body>
 <div style="display: flex;width: 99%">
     <?php
+    require_once "../utility_class/Select.php";
+    use select\Select;
     session_start();
     if (isset($_GET['id'])){
         $_SESSION['p.id'] = $_GET['id'];
     }
-    $pdo=new PDO("mysql:host=localhost;dbname=webstore","root","");
-    $query=$pdo->prepare("SELECT * FROM product WHERE id = :id");
-    $query->execute(['id'=>$_SESSION['p.id']]);
-    $result=$query->fetch(PDO::FETCH_ASSOC);
+    $select=new Select();
+    $result=$select->fetch('product','id',$_SESSION['p.id']);
     if ($result){
         $path=$result['image_path'];
 echo "<img src='$path'>";
@@ -42,21 +42,20 @@ echo "</form>";
 </html>
 <?php
 require '../Cart/Cart.php';
-require '../classes/Select.php';
 use cart\Cart;
-use select\Select;
+
 if($_SERVER['REQUEST_METHOD']=='POST') {
     if (!isset($_SESSION["email"])){
         exit("<h1 style='display: flex;justify-content: center;align-items: center ;margin-top: 3%'>Please Login</h1>");
     }
     else{
-        $pdo=new PDO("mysql:host=localhost;dbname=webstore","root","");
         $select=new Select();
         $cart=new Cart();
-        $result = $select->fetch($pdo,'user','email',$_SESSION['email']);
+        $connect=new Connect();
+        $result = $select->fetch('user','email',$_SESSION['email']);
         if($result){
             if (!empty($_POST['quantity']) && $_POST['quantity']>0)
-            $cart->addToCart($pdo,$result['ID'],$_SESSION['p.id'],$_POST['quantity']);
+            $cart->addToCart($connect->connectToDatabase(),$result['ID'],$_SESSION['p.id'],$_POST['quantity']);
         }
     }
 }

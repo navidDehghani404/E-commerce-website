@@ -11,7 +11,9 @@
 <div class="mainDivCart">
     <?php
     session_start();
-    require '../classes/Select.php';
+    require '../utility_class/Select.php';
+    require_once '../Cart/Cart.php';
+    use cart\Cart;
     use select\Select;
     if (empty($_SESSION['email'])){
         exit('<div class="alert alert-danger text-center DivError" role="alert"><h2>Error</h2>
@@ -22,15 +24,15 @@
     $NumberOfProducts=0;
     $TotalPrice=0;
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=webstore", "root", "");
+        $connect=new Connect();
         $select = new Select();
-        $u_result=$select->fetch($pdo,'user','email',$_SESSION['email']);
+        $u_result=$select->fetch('user','email',$_SESSION['email']);
         if ($u_result){
             $u_id = $u_result['ID'];
         }
-        $ci_result=$select->fetchAll($pdo,'cart_items','user_id',$u_id);
+        $ci_result=$select->fetchAll('cart_items','user_id',$u_id);
         foreach ($ci_result as $item){
-            $p_result=$select->fetchAll($pdo,'product','ID',$item['product_id']);
+            $p_result=$select->fetchAll('product','ID',$item['product_id']);
 
                     foreach ($p_result as $row) {
             echo "<div class='FormDiv'>";
@@ -73,16 +75,14 @@
         </div>
     </div>
     <div style="width:50%" class="justify-content-center align-items-center d-flex">
-        <form method="post" action="#">
-            <button type="submit" class="btn btn-primary border-white btn-lg btn2">Order</button>
-        </form>
+        <?php
+            echo "<a class='btn btn-primary border-white btn-lg btn2' style='width: 40%' href='zarinpal/pay.php?total=$TotalPrice'>Order</a>";
+           ?>
     </div>
 </footer>
 </body>
 </html>
 <?php
-require '../Cart/Cart.php';
-use cart\Cart;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $cart = new Cart();
         $pdo=new PDO("mysql:host=localhost;dbname=webstore", "root", "");

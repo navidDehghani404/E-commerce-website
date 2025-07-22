@@ -19,8 +19,10 @@
 </div>
 </body>
 </html>
-
+<!--ultity-->
 <?php
+require_once "../utility_class/connect.php";
+require_once "../models/User.php";
 session_start();
 if (isset($_COOKIE['login'])){
     $_SESSION['login'] = true;
@@ -33,33 +35,12 @@ if (isset($_COOKIE['login'])){
     unset($_SESSION["email"]);
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_POST["email"] == "admin@gmail.com" && $_POST["password"] == "admin1234") {
-        header("Location: ../AdminPanel/AdminPanel.php");
-        exit();
-    }
+    $connect=new  Connect();
+    $user = new \models\User($connect->connectToDatabase());
+    $user->isAdmin($_POST["email"], $_POST["password"],'../AdminPanel/AdminPanel.php');
+    $user->login($_POST["email"], $_POST["password"]);
     if (strlen($_POST["password"]) < 8) {
         echo "<p class='error'>Password must be at least 8 characters long.</p><br>";
         exit();
-    }
-    $pdo= new PDO("mysql:host=localhost;dbname=webstore", "root", "");
-    $query=$pdo->prepare('SELECT * FROM user WHERE email=:email');
-    $query->bindParam(':email',$_POST["email"],PDO::PARAM_STR);
-    $query->execute();
-    $result=$query->fetch();
-    if (!$result){
-        echo "<p class='error'>There is no email.</p><br>";
-        exit();
-    }else{
-        $password=$result["password"];
-        if (password_verify($_POST["password"],$password)) {
-            setcookie('login',true,time() + 51184000,'/','localhost',true,true);
-            $_SESSION['login'] = true;
-            $_SESSION["email"]=$_POST["email"];
-
-            header("Location:../UserPanel/AllProductPanel.php");
-        }
-        else{
-            echo "<p class='error'>Wrong password.</p><br>";
-        }
     }
 }

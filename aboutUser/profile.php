@@ -10,14 +10,14 @@
 <body>
 <?php
 session_start();
-require '../classes/Select.php';
+require '../utility_class/Select.php';
 use select\Select;
 if (!isset($_SESSION['email'])) {
     header('Location: ../Login-form/Login.php');
 }
 $select = new Select();
 $pdo = new PDO('mysql:host=localhost;dbname=webstore', 'root', '');
-$result=$select->fetch($pdo,'user','email',$_SESSION['email']);
+$result=$select->fetch('user','email',$_SESSION['email']);
 if ($result){
     echo "<div class='div1'>";
     $img_path=$result['profile_path'];
