@@ -76,7 +76,8 @@
     </div>
     <div style="width:50%" class="justify-content-center align-items-center d-flex">
         <?php
-            echo "<a class='btn btn-primary border-white btn-lg btn2' style='width: 40%' href='zarinpal/pay.php?total=$TotalPrice'>Order</a>";
+        $TotalPrice=$TotalPrice*800000;
+            echo "<a class='btn btn-primary border-white btn-lg btn2' target='_blank' style='width: 40%' href='zarinpal/pay.php?total=$TotalPrice'>Order</a>";
            ?>
     </div>
 </footer>

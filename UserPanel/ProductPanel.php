@@ -21,7 +21,8 @@
         $path=$result['image_path'];
 echo "<img src='$path'>";
 echo "<div class='subject'>";
-echo "<h4>".$result['category']."</h4>";
+$category=$select->fetch('category','ID',$result['category_id']);
+echo "<h4>".$category['name']."</h4>";
 echo "<hr style='width: 650%'>";
 echo "<h2>".$result['product_name']."</h2>";
 echo "<hr style='width: 650%'>";

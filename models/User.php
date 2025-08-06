@@ -91,7 +91,7 @@ class User
             $path = '../profiles/' . uniqid('prof', true) . '.' . pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
             if (move_uploaded_file($_FILES['img']['tmp_name'], $path)) {
                 $select = new Select();
-                $results = $select->fetch($pdo, 'user', 'email', $_SESSION['email']);
+                $results = $select->fetch($pdo, 'user', 'email');
                 if ($results) {
                     if (!empty($results['profile_path'])) {
 

@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 20px;
+    direction: rtl;
+    color: #111;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-weight: 700;
+}
+
+.filters {
+    margin: 15px 0;
+}
+
+.filters .filter {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #374151;
+    transition: background-color 0.3s;
+}
+
+.filters .filter.active,
+.filters .filter:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 260px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.product-card h4 {
+    margin: 0 0 8px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.rating {
+    color: #fbbf24;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.price {
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: #111;
+}
+
+.price .old {
+    text-decoration: line-through;
+    color: #6b7280;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.add-to-cart {
+    background-color: #2563eb;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-to-cart .cart-icon {
+    margin-left: 0;
+    margin-right: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
+
+.add-to-cart:hover .cart-icon {
+    opacity: 1;
+    margin-right: 8px;
+    position: absolute;
+}
