@@ -1,5 +1,5 @@
 <?php
 require_once "../utility_class/SQL.php";
 $sql=new SQL();
-$sql->edit('orders','send_status','1','ID',$_GET['id']);
+$sql->edit('orders','status','2','ID',$_GET['orderId']);
 header('Location: AdminPanel.php');

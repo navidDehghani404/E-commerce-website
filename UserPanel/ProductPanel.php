@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
+    <link href="UP-css-js/Ppanel.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Panel</title>
-    <link rel="stylesheet" href="UP-css-js/Ppanel.css">
 </head>
 <body>
-<div style="display: flex;width: 99%">
+<div class="container">
     <?php
     require_once "../utility_class/Select.php";
     use select\Select;
@@ -19,24 +19,23 @@
     $result=$select->fetch('product','id',$_SESSION['p.id']);
     if ($result){
         $path=$result['image_path'];
-echo "<img src='$path'>";
-echo "<div class='subject'>";
-$category=$select->fetch('category','ID',$result['category_id']);
-echo "<h4>".$category['name']."</h4>";
-echo "<hr style='width: 650%'>";
-echo "<h2>".$result['product_name']."</h2>";
-echo "<hr style='width: 650%'>";
-echo "<h3>".$result['description']."</h3>";
-echo "</div>";
-echo "</div>";
-echo "<div class='Price'>";
-echo "<h1>".'$'.$result['price']."</h1>";
-echo "<h2>Stock : ".$result['stock_quantity']."</h2>";
-echo "<form method='post' action='ProductPanel.php'>";
-echo "<button type='submit' name='btn' class='btn' style='margin-top: 1%'>Add to cart</button>";
-echo "<input type='number' name='quantity' class='num'>";
-echo "</form>";
-}
+        echo "<div class='product-image'><img src='$path' alt='Product'></div>";
+        echo "<div class='product-info'>";
+        $category=$select->fetch('category','ID',$result['category_id']);
+        echo "<h4>".$category['name']."</h4>";
+        echo "<div class='divider'></div>";
+        echo "<h2>".$result['product_name']."</h2>";
+        echo "<h3>".$result['description']."</h3>";
+        echo "<div class='price-section'>";
+        echo "<h1>".'$'.$result['price']."</h1>";
+        echo "<h2>موجودی: ".$result['stock_quantity']."</h2>";
+        echo "<form method='post' action='ProductPanel.php'>";
+        echo "<input type='number' name='quantity' class='num' placeholder='تعداد'>";
+        echo "<button type='submit' name='btn' class='btn'>افزودن به سبد</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+    }
     ?>
 </div>
 </body>
@@ -56,7 +55,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         $result = $select->fetch('user','email',$_SESSION['email']);
         if($result){
             if (!empty($_POST['quantity']) && $_POST['quantity']>0)
-            $cart->addToCart($connect->connectToDatabase(),$result['ID'],$_SESSION['p.id'],$_POST['quantity']);
+                $cart->addToCart($connect->connectToDatabase(),$result['ID'],$_SESSION['p.id'],$_POST['quantity']);
         }
     }
 }
+?>

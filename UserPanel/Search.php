@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
+    <link href="UP-css-js/SearchPanel.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Panel</title>
-    <link rel="stylesheet" href="UP-css-js/Upanel.css">
 </head>
+<style>
+
+</style>
 <body>
 <form method="post" action="Search.php" class="SearchMainForm">
     <input name="search" type="search" placeholder="search" class="SearchTxt">
@@ -13,16 +16,27 @@
 </form>
 <div class="BigFormDiv">
 <?php
+require_once '../utility_class/connect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $pdo= new PDO("mysql:host=localhost;dbname=webstore", "root", "");
-    $query = $pdo->prepare("SELECT *
-FROM product
-WHERE category = :category
-   OR product_name LIKE CONCAT(:category, '%')");
-    $query->bindParam(':category', $_POST['search']);
-    $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($result as $row) {
+    $pdo= new Connect();
+    $pdo=$pdo->connectToDatabase();
+    $search = $_POST['search']; // متن سرچ شده کاربر
+
+    $query = $pdo->prepare("
+    SELECT p.*, c.name AS category_name
+    FROM product p
+    JOIN category c ON p.category_id = c.id
+    WHERE c.name LIKE CONCAT('%', :search, '%')
+       OR p.product_name LIKE CONCAT('%', :search, '%')
+");
+
+    $query->execute([
+        ':search' => $search
+    ]);
+
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($results as $row) {
         echo "<div class='FormDiv'>";
         echo "<form method='get' action='ProductPanel.php'>";
         $path = $row['image_path'];

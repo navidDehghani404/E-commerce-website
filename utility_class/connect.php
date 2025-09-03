@@ -2,7 +2,7 @@
 class Connect{
     public $sql="mysql";
     public $host="localhost";
-    public $db="webstore";
+    public $db="store";
     public $username="root";
     public $password="";
 
